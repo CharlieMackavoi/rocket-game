@@ -5,10 +5,17 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    Rigidbody rocketRigidBody;
-    AudioSource rocketBoostAudio;
+    
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotationThrust = 100f;
+    [SerializeField] AudioClip mainEngine;
+
+    [SerializeField] ParticleSystem leftThrustParticles;
+    [SerializeField] ParticleSystem rightThrustParticles;
+    [SerializeField] ParticleSystem baseThrustParticles;
+
+    Rigidbody rocketRigidBody;
+    AudioSource rocketBoostAudio;
 
 
     // Start is called before the first frame update
@@ -21,29 +28,56 @@ public class Movement : MonoBehaviour
     void Update(){
         ProcessThrust();
         ProcessRotation();
-        
     }
 
     void ProcessThrust(){
         if(Input.GetKey(KeyCode.Space)){
-            rocketRigidBody.AddRelativeForce(Vector3.up * Time.deltaTime * mainThrust);
-            if(!rocketBoostAudio.isPlaying){
-                rocketBoostAudio.Play();
-            }
-            
+            StartThrusting();
+
         }
         else{
             rocketBoostAudio.Stop();
+            baseThrustParticles.Stop();
+        }
+    }
+    void ProcessRotation(){
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)){
+            RightThrusting();
+        }
+        else if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)){
+            LeftThrusting();
+        }
+        else{
+            leftThrustParticles.Stop();
+            rightThrustParticles.Stop();
         }
     }
 
-    void ProcessRotation(){
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)){
-            ApplyRotation(rotationThrust);
-        }
-        else if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)){
-            ApplyRotation(-rotationThrust);
-        }
+
+
+    void StartThrusting()
+    {
+        rocketRigidBody.AddRelativeForce(Vector3.up * Time.deltaTime * mainThrust);
+            if (!rocketBoostAudio.isPlaying){
+                rocketBoostAudio.PlayOneShot(mainEngine);
+            }
+            if (!baseThrustParticles.isPlaying){
+                baseThrustParticles.Play();
+            }
+    }
+
+    void RightThrusting(){
+        ApplyRotation(rotationThrust);
+            if (!rightThrustParticles.isPlaying){
+                rightThrustParticles.Play();
+            }
+    }
+
+    void LeftThrusting(){
+        ApplyRotation(-rotationThrust);
+            if (!leftThrustParticles.isPlaying){
+                leftThrustParticles.Play();
+            }
     }
 
     void ApplyRotation(float rotatoinThisFrame){

@@ -4,30 +4,64 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
 
-    [SerializeField] float levelDelayTimer = 1f;
+    [SerializeField] float levelDelayTimer = 2f;
+    [SerializeField] AudioClip crashRocket;
+    [SerializeField] AudioClip wonTheLevel;
+
+    [SerializeField] ParticleSystem crashRocketParticles;
+    [SerializeField] ParticleSystem wonTheLevelParticles;
+
+    AudioSource audioSource;
+
+    bool isTransitioning = false;
+
+    void Start(){
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    void Update(){
+        CheatKeys();
+    }
+
+    void CheatKeys(){
+        if(Input.GetKey(KeyCode.L)){
+            LoadNextLevel(); //Load next level on command
+        }
+    }
     void OnCollisionEnter(Collision other){
-        switch(other.gameObject.tag){
-            case "Friendly":
-                Debug.Log("This is friendly");
-                break;
-            case "Finish":
-                StartNextLevel();
-                break;
-            default:
-                //Invoke delays calling a method (In this case so the player realizes they crashed.)
-                StartCrashSequence();
-                break;
+        if(!isTransitioning){
+            switch(other.gameObject.tag){
+                    case "Friendly":
+                        Debug.Log("This is friendly");
+                        break;
+                    case "Finish":
+                        StartNextLevel();
+                        break;
+                    default:
+                        StartCrashSequence();
+                        break;
+            }
+        
         }
 
     }
 
+
     void StartCrashSequence(){
-        //todo add SFX on crashing
+        isTransitioning = true;
+        audioSource.Stop();
+        audioSource.PlayOneShot(crashRocket);
+        crashRocketParticles.Play();
         GetComponent<Movement>().enabled = false;
+        //Invoke delays calling a method (In this case so the player realizes they crashed.)
         Invoke("ReloadLevel", levelDelayTimer);
     }
 
     void StartNextLevel(){
+        isTransitioning = true;
+        audioSource.Stop();
+        audioSource.PlayOneShot(wonTheLevel);
+        wonTheLevelParticles.Play();
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel", levelDelayTimer);
     }
