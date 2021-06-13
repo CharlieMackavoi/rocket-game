@@ -18,13 +18,11 @@ public class Movement : MonoBehaviour
     AudioSource rocketBoostAudio;
 
 
-    // Start is called before the first frame update
     void Start(){
         rocketRigidBody = GetComponent<Rigidbody>();
         rocketBoostAudio = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update(){
         ProcessThrust();
         ProcessRotation();
