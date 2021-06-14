@@ -34,6 +34,9 @@ public class CollisionHandler : MonoBehaviour
                     case "Friendly":
                         Debug.Log("This is friendly");
                         break;
+                        case "Trigger":
+                        Debug.Log("This is a trigger");
+                        break;
                     case "Finish":
                         StartNextLevel();
                         break;

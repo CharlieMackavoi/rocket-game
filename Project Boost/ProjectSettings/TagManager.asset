@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Friendly
   - Fuel
+  - Trigger
   layers:
   - Default
   - TransparentFX
