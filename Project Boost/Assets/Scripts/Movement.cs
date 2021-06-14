@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
-{
+public class Movement : MonoBehaviour{
     
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotationThrust = 100f;
@@ -53,8 +52,7 @@ public class Movement : MonoBehaviour
 
 
 
-    void StartThrusting()
-    {
+    void StartThrusting(){
         rocketRigidBody.AddRelativeForce(Vector3.up * Time.deltaTime * mainThrust);
             if (!rocketBoostAudio.isPlaying){
                 rocketBoostAudio.PlayOneShot(mainEngine);

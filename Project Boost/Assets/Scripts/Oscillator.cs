@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Oscillator : MonoBehaviour
-{
+public class Oscillator : MonoBehaviour{
 
     Vector3 startingPosition;
     [SerializeField] Vector3 movementVector;
@@ -11,12 +10,10 @@ public class Oscillator : MonoBehaviour
     [SerializeField] float period = 2f;
 
 
-    void Start()
-    {
+    void Start(){
         startingPosition = transform.position;
     }
-    void Update()
-    {
+    void Update(){
         if(period <= Mathf.Epsilon){return;}        //Avoid NaN error
 
         const float tau = Mathf.PI * 2;             //constant value of 6.283

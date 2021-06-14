@@ -3717,7 +3717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e77ea60994100b42b053122c2bd9a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovingRock: {fileID: 552241761}
+  triggerScript: {fileID: 552241761}
 --- !u!1001 &2115681788
 PrefabInstance:
   m_ObjectHideFlags: 0

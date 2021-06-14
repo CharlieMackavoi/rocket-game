@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CollisionHandler : MonoBehaviour
-{
+public class CollisionHandler : MonoBehaviour{
 
     [SerializeField] float levelDelayTimer = 2f;
     [SerializeField] AudioClip crashRocket;
